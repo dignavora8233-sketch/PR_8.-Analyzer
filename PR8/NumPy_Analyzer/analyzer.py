@@ -26,10 +26,14 @@ class NumPyAnalyzer:
             self.array = self.array.reshape(rows, cols)
 
         elif choice == "3":
-            values = input("Enter elements: ").split()
-            self.array = np.array([int(x) for x in values])
+           layers = int(input("Enter layers: "))
+           rows = int(input("Enter rows: "))
+           cols = int(input("Enter columns: "))
 
-            print("3D array mate reshape manually kari shako.")
+           values = input("Enter elements: ").split()
+           self.array = np.array([int(x) for x in values])
+
+           self.array = self.array.reshape(layers, rows, cols)
 
         print("\nArray created successfully:")
         print(self.array)
