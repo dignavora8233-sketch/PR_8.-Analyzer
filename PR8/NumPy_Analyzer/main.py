@@ -1,7 +1,8 @@
-from analyzer import NumPyAnalyzer
+from analyzer import DataAnalytics
 
 
-obj = NumPyAnalyzer()
+obj = DataAnalytics()
+
 
 while True:
 
@@ -9,11 +10,12 @@ while True:
     print("=" * 40)
 
     print("1. Create a NumPy Array")
-    print("2. Mathematical Operations")
-    print("3. Combine or Split Arrays")
-    print("4. Search, Sort, or Filter")
-    print("5. Aggregates and Statistics")
-    print("6. Exit")
+    print("2. Indexing and Slicing")
+    print("3. Mathematical Operations")
+    print("4. Combine or Split Arrays")
+    print("5. Search, Sort, or Filter")
+    print("6. Aggregates and Statistics")
+    print("7. Exit")
 
     choice = input("Enter your choice: ")
 
@@ -21,18 +23,21 @@ while True:
         obj.create_array()
 
     elif choice == "2":
-        obj.mathematical_operations()
+        obj.indexing_slicing()
 
     elif choice == "3":
-        obj.combine_split()
+        obj.mathematical_operations()
 
     elif choice == "4":
-        obj.search_sort_filter()
+        obj.combine_split()
 
     elif choice == "5":
-        obj.statistics()
+        obj.search_sort_filter()
 
     elif choice == "6":
+        obj.statistics()
+
+    elif choice == "7":
         print("Thank you!")
         break
 
