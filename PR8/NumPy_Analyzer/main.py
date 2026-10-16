@@ -1,3 +1,4 @@
+
 from analyzer import DataAnalytics
 
 
@@ -15,7 +16,8 @@ while True:
     print("4. Combine or Split Arrays")
     print("5. Search, Sort, or Filter")
     print("6. Aggregates and Statistics")
-    print("7. Exit")
+    print("7. Load Default Array")
+    print("8. Exit")
 
     choice = input("Enter your choice: ")
 
@@ -38,8 +40,16 @@ while True:
         obj.statistics()
 
     elif choice == "7":
-        print("Thank you!")
+        obj = DataAnalytics.default_array()
+
+        print("\nDefault Array Loaded Successfully!")
+        print(obj.array)
+
+    elif choice == "8":
+        print("Thank you for using NumPy Analyzer!")
         break
 
     else:
-        print("Invalid choice.")
+        print("Invalid choice. Please try again.")
+        
+        
