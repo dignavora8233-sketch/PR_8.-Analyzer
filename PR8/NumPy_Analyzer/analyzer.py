@@ -1,4 +1,6 @@
+
 import numpy as np
+
 
 class DataAnalytics:
 
@@ -28,7 +30,6 @@ class DataAnalytics:
 
     # Create Array
     def create_array(self):
-
         self.show_title("CREATE NUMPY ARRAY")
 
         print("1. 1D Array")
@@ -41,19 +42,18 @@ class DataAnalytics:
             if choice == "1":
                 values = input("Enter elements: ").split()
 
-                if len(values) == 0:
+                if not values:
                     print("Please enter elements.")
                     return
 
                 self.array = np.array([int(x) for x in values])
 
             elif choice == "2":
-
                 rows = int(input("Enter rows: "))
                 cols = int(input("Enter columns: "))
 
                 if rows <= 0 or cols <= 0:
-                    print("Rows and columns must be positive.")
+                    print("Dimensions must be positive.")
                     return
 
                 values = input("Enter elements: ").split()
@@ -63,10 +63,11 @@ class DataAnalytics:
                     print("Required elements:", rows * cols)
                     return
 
-                self.array = np.array([int(x) for x in values]).reshape(rows, cols)
+                self.array = np.array(
+                    [int(x) for x in values]
+                ).reshape(rows, cols)
 
             elif choice == "3":
-
                 layers = int(input("Enter layers: "))
                 rows = int(input("Enter rows: "))
                 cols = int(input("Enter columns: "))
@@ -75,16 +76,17 @@ class DataAnalytics:
                     print("Dimensions must be positive.")
                     return
 
-                values = input("Enter elements: ").split()
-
                 required = layers * rows * cols
+                values = input("Enter elements: ").split()
 
                 if len(values) != required:
                     print("Incorrect number of elements.")
                     print("Required elements:", required)
                     return
 
-                self.array = np.array([int(x) for x in values]).reshape(layers, rows, cols)
+                self.array = np.array(
+                    [int(x) for x in values]
+                ).reshape(layers, rows, cols)
 
             else:
                 print("Invalid choice.")
@@ -94,23 +96,19 @@ class DataAnalytics:
             print(self.array)
 
         except ValueError:
-            print("Please enter integer values only.")
+            print("Please enter valid integer values.")
 
     # Indexing and Slicing
     def indexing_slicing(self):
-
         if not self.__check_array():
             return
 
         self.show_title("INDEXING AND SLICING")
-
         print("Array:")
         print(self.array)
 
         try:
-
             if self.array.ndim == 1:
-
                 index = int(input("Enter index: "))
                 print("Element:", self.array[index])
 
@@ -121,7 +119,6 @@ class DataAnalytics:
                 print(self.array[start:end])
 
             elif self.array.ndim == 2:
-
                 row = int(input("Enter row index: "))
                 col = int(input("Enter column index: "))
 
@@ -129,30 +126,47 @@ class DataAnalytics:
 
                 start_row = int(input("Enter start row: "))
                 end_row = int(input("Enter end row: "))
-
                 start_col = int(input("Enter start column: "))
                 end_col = int(input("Enter end column: "))
 
+                # Correct slicing syntax
                 print("Sliced Array:")
-                print(self.array[ start_row:end_row ,start_co l:end_col] )
+                print(
+                    self.array[
+                        start_row:end_row,
+                        start_col:end_col
+                    ]
+                )
 
             elif self.array.ndim == 3:
-
                 layer = int(input("Enter layer index: "))
                 row = int(input("Enter row index: "))
                 col = int(input("Enter column index: "))
 
-                print( "Element:", self.array[layer, row, col] )
+                print("Element:", self.array[layer, row, col])
 
-                print("Sliced Array:")
+                print("Selected Layer:")
                 print(self.array[layer])
 
+                start_row = int(input("Enter start row: "))
+                end_row = int(input("Enter end row: "))
+                start_col = int(input("Enter start column: "))
+                end_col = int(input("Enter end column: "))
+
+                print("Sliced Array:")
+                print(
+                    self.array[
+                        layer,
+                        start_row:end_row,
+                        start_col:end_col
+                    ]
+                )
+
         except (ValueError, IndexError):
-            print("Invalid index.")
+            print("Invalid index or input.")
 
     # Mathematical Operations
     def mathematical_operations(self):
-
         if not self.__check_array():
             return
 
@@ -168,91 +182,88 @@ class DataAnalytics:
         choice = input("Enter your choice: ")
 
         try:
-
             if choice in ["1", "2", "3", "4"]:
-
                 values = input("Enter second array elements: ").split()
-
-                second = np.array([int(x) for x in values])
-
-                if second.size != self.array.size:
-                    print( "Both arrays must have same number of elements." )
-                    return
-
-                second = second.reshape(self.array.shape)
-
-                if choice == "1":
-                    print("\nResult:")
-                    print(self.array + second)
-
-                elif choice == "2":
-                    print("\nResult:")
-                    print(self.array - second)
-
-                elif choice == "3":
-                    print("\nResult:")
-                    print(self.array * second)
-
-                elif choice == "4":
-
-                    if np.any(second == 0):
-                        print("Division by zero is not allowed.")
-                        return
-
-                    print("\nResult:")
-                    print(self.array / second)
-
-            elif choice == "5":
-
-                if self.array.ndim != 1:
-                    print("Dot product requires 1D arrays.")
-                    return
-
-                values = input("Enter second array elements: " ).split()
-
                 second = np.array([int(x) for x in values])
 
                 if second.size != self.array.size:
                     print("Both arrays must have same size.")
                     return
 
-                print("\nDot Product:")
+                second = second.reshape(self.array.shape)
+
+                if choice == "1":
+                    print("Addition Result:")
+                    print(self.array + second)
+
+                elif choice == "2":
+                    print("Subtraction Result:")
+                    print(self.array - second)
+
+                elif choice == "3":
+                    print("Multiplication Result:")
+                    print(self.array * second)
+
+                elif choice == "4":
+                    if np.any(second == 0):
+                        print("Division by zero is not allowed.")
+                        return
+
+                    print("Division Result:")
+                    print(self.array / second)
+
+            elif choice == "5":
+                if self.array.ndim != 1:
+                    print("Dot product requires 1D arrays.")
+                    return
+
+                values = input("Enter second array elements: ").split()
+                second = np.array([int(x) for x in values])
+
+                if second.size != self.array.size:
+                    print("Both arrays must have same size.")
+                    return
+
+                print("Dot Product:")
                 print(np.dot(self.array, second))
 
             elif choice == "6":
-
                 if self.array.ndim != 2:
-                    print( "Matrix multiplication requires a 2D array." )
+                    print("Matrix multiplication requires a 2D array.")
                     return
 
                 rows = int(input("Enter second matrix rows: "))
+                cols = int(input("Enter second matrix columns: "))
 
-                cols = int( input("Enter second matrix columns: ") )
+                if rows <= 0 or cols <= 0:
+                    print("Dimensions must be positive.")
+                    return
 
-                values = input( "Enter second matrix elements: " ).split()
+                values = input("Enter second matrix elements: ").split()
 
                 if len(values) != rows * cols:
                     print("Incorrect number of elements.")
                     return
 
-                second = np.array([int(x) for x in values] ).reshape(rows, cols)
+                second = np.array(
+                    [int(x) for x in values]
+                ).reshape(rows, cols)
 
                 if self.array.shape[1] != second.shape[0]:
-                    print( "Matrix dimensions are not compatible." )
+                    print("Matrix dimensions are not compatible.")
                     return
 
-                print("\nMatrix Multiplication:")
+                print("Matrix Multiplication Result:")
                 print(np.matmul(self.array, second))
 
             else:
                 print("Invalid choice.")
 
         except ValueError:
-            print("Please enter integer values.")
+            print("Please enter valid integer values.")
 
     # Combine and Split
     def combine_split(self):
-
         if not self.__check_array():
             return
 
@@ -264,15 +275,12 @@ class DataAnalytics:
         choice = input("Enter your choice: ")
 
         try:
-
             if choice == "1":
-
-                values = input("Enter another array elements:" ).split()
-
+                values = input("Enter another array elements: ").split()
                 second = np.array([int(x) for x in values])
 
                 if second.size != self.array.size:
-                    print("Both arrays must have same number of elements." )
+                    print("Both arrays must have same size.")
                     return
 
                 second = second.reshape(self.array.shape)
@@ -280,23 +288,25 @@ class DataAnalytics:
                 if self.array.ndim == 1:
                     result = np.concatenate((self.array, second))
                 else:
-                    result = np.concatenate( (self.array, second), axis=0)
+                    result = np.concatenate(
+                        (self.array, second), axis=0
+                    )
 
-                print("\nCombined Array:")
+                print("Original Array:")
+                print(self.array)
+                print("Second Array:")
+                print(second)
+                print("Combined Array:")
                 print(result)
 
             elif choice == "2":
-
                 parts = int(input("Enter number of parts: "))
 
                 if parts <= 0:
-                    print("Parts must be greater than 0.")
+                    print("Parts must be positive.")
                     return
 
-                result = np.array_split(self.array,parts)
-                  
-
-                print("\nSplit Arrays:")
+                result = np.array_split(self.array, parts)
 
                 for i, part in enumerate(result, 1):
                     print("Part", i)
@@ -306,11 +316,10 @@ class DataAnalytics:
                 print("Invalid choice.")
 
         except ValueError:
-            print("Invalid input.")
+            print("Please enter valid integer values.")
 
     # Search, Sort and Filter
     def search_sort_filter(self):
-
         if not self.__check_array():
             return
 
@@ -323,10 +332,8 @@ class DataAnalytics:
         choice = input("Enter your choice: ")
 
         try:
-
             if choice == "1":
-
-                value = int(input("Enter value: "))
+                value = int(input("Enter value to search: "))
 
                 if np.any(self.array == value):
                     print("Value found.")
@@ -334,64 +341,53 @@ class DataAnalytics:
                     print("Value not found.")
 
             elif choice == "2":
-
                 print("1. Ascending")
                 print("2. Descending")
 
-                sort_choice = input("Enter your choice: " )
-
+                sort_choice = input("Enter your choice: ")
                 values = self.array.flatten()
 
                 if sort_choice == "1":
-
-                    print("\nAscending Order:")
+                    print("Ascending Order:")
                     print(np.sort(values))
 
                 elif sort_choice == "2":
-
-                    print("\nDescending Order:")
+                    print("Descending Order:")
                     print(np.sort(values)[::-1])
 
                 else:
                     print("Invalid choice.")
 
             elif choice == "3":
-
                 print("1. Greater than")
                 print("2. Less than")
                 print("3. Equal to")
 
                 condition = input("Enter condition: ")
-
                 value = int(input("Enter value: "))
-
                 values = self.array.flatten()
 
                 if condition == "1":
                     result = values[values > value]
-
                 elif condition == "2":
                     result = values[values < value]
-
                 elif condition == "3":
                     result = values[values == value]
-
                 else:
                     print("Invalid condition.")
                     return
 
-                print("\nFiltered values:")
+                print("Filtered Values:")
                 print(result)
 
             else:
                 print("Invalid choice.")
 
         except ValueError:
-            print("Please enter integer values.")
+            print("Please enter a valid integer.")
 
-    # Statistics
+    # Aggregates and Statistics
     def statistics(self):
-
         if not self.__check_array():
             return
 
@@ -410,7 +406,6 @@ class DataAnalytics:
         choice = input("Enter your choice: ")
 
         try:
-
             if choice == "1":
                 print("Sum:", np.sum(self.array))
 
@@ -427,39 +422,53 @@ class DataAnalytics:
                 print("Maximum:", np.max(self.array))
 
             elif choice == "6":
-                print( "Standard Deviation:", np.std(self.array) )
+                print("Standard Deviation:", np.std(self.array))
 
             elif choice == "7":
-                print( "Variance:", np.var(self.array) )
+                print("Variance:", np.var(self.array))
 
             elif choice == "8":
+                percentile = float(input("Enter percentile (0-100): "))
 
-                percentile = float( input("Enter percentile (0-100): ") )
-
-                if percentile < 0 or percentile > 100:
-                    print( "Percentile must be between 0 and 100." )
+                if not 0 <= percentile <= 100:
+                    print("Percentile must be between 0 and 100.")
                     return
 
-                print( "Percentile:", np.percentile( self.array,  percentile ) )
+                print(
+                    "Percentile:",
+                    np.percentile(self.array, percentile)
+                )
 
             elif choice == "9":
-
-                values = input(  "Enter second array elements: " ).split()
-
-                second = np.array( [int(x) for x in values]  )
-
+                values = input("Enter second array elements: ").split()
+                second = np.array([int(x) for x in values])
                 first = self.array.flatten()
 
                 if first.size != second.size:
-                    print(  "Both arrays must have same size."  )
+                    print("Both arrays must have same size.")
                     return
 
-                correlation = np.corrcoef(first,  second )[0, 1]
+                if first.size < 2:
+                    print("At least two elements are required.")
+                    return
 
-                print( "Correlation Coefficient:", correlation )
+                if np.std(first) == 0 or np.std(second) == 0:
+                    print("Correlation is undefined for constant arrays.")
+                    return
+
+                print(
+                    "Correlation Coefficient:",
+                    np.corrcoef(first, second)[0, 1]
+                )
 
             else:
                 print("Invalid choice.")
 
         except ValueError:
             print("Please enter valid values.")
+            
+            
+                
+                    
+                
+                    
